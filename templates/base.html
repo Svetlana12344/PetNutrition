@@ -124,6 +124,13 @@
                                     <i class="fas fa-sign-out-alt"></i> Выйти
                                 </a>
                             </li>
+                            {% if user.is_staff %}
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'admin_demo' %}">
+                                    <i class="fas fa-user-shield"></i> Админ-демо
+                                </a>
+                            </li>
+                            {% endif %}
                         </ul>
                     </li>
                     {% else %}
@@ -179,8 +186,8 @@
                 </div>
                 <div class="col-md-4">
                     <h5>Контакты</h5>
-                    <p>Email: info@petnutrition.ru</p>
-                    <p>Телефон: +7 (XXX) XXX-XX-XX</p>
+                    <p>Email: </p>
+                    <p>Телефон: </p>
                 </div>
                 <div class="col-md-4">
                     <h5>Быстрые ссылки</h5>

@@ -1,0 +1,182 @@
+{% extends 'base.html' %}
+
+{% block title %}Демо-данные - PetNutrition{% endblock %}
+
+{% block page_title %}Демонстрация тестовых данных{% endblock %}
+{% block page_subtitle %}Админка и примеры данных из базы{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <div class="alert alert-info">
+            <h4><i class="fas fa-info-circle me-2"></i>Информация</h4>
+            <p>На этой странице демонстрируются данные, созданные в админке системы.</p>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <!-- Статистика -->
+    <div class="col-md-12 mb-4">
+        <div class="card">
+            <div class="card-header">
+                <h4><i class="fas fa-chart-bar me-2"></i>Статистика системы</h4>
+            </div>
+            <div class="card-body">
+                <div class="row text-center">
+                    <div class="col-md-3">
+                        <div class="p-3 border rounded bg-light">
+                            <h2 class="text-primary">{{ users_count }}</h2>
+                            <p class="mb-0">Пользователей</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="p-3 border rounded bg-light">
+                            <h2 class="text-success">{{ pets_count }}</h2>
+                            <p class="mb-0">Питомцев</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="p-3 border rounded bg-light">
+                            <h2 class="text-warning">{{ foods_count }}</h2>
+                            <p class="mb-0">Кормов</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="p-3 border rounded bg-light">
+                            <h2 class="text-danger">{{ plans_count }}</h2>
+                            <p class="mb-0">Планов питания</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <!-- Примеры питомцев -->
+    <div class="col-md-6 mb-4">
+        <div class="card h-100">
+            <div class="card-header bg-primary text-white">
+                <h4><i class="fas fa-dog me-2"></i>Примеры питомцев</h4>
+            </div>
+            <div class="card-body">
+                {% if sample_pets %}
+                <div class="list-group">
+                    {% for pet in sample_pets %}
+                    <div class="list-group-item">
+                        <div class="d-flex w-100 justify-content-between">
+                            <h5 class="mb-1">{{ pet.name }}</h5>
+                            <span class="badge {% if pet.pet_type == 'dog' %}bg-primary{% else %}bg-warning{% endif %}">
+                                {{ pet.get_pet_type_display }}
+                            </span>
+                        </div>
+                        <p class="mb-1">
+                            <strong>Порода:</strong> {{ pet.breed }}<br>
+                            <strong>Возраст:</strong> {{ pet.age }} лет<br>
+                            <strong>Вес:</strong> {{ pet.weight }} кг
+                        </p>
+                        <small class="text-muted">Владелец: {{ pet.owner.username }}</small>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% else %}
+                <p class="text-muted">Нет данных о питомцах</p>
+                {% endif %}
+            </div>
+            <div class="card-footer">
+                <a href="{% url 'admin:pets_pet_changelist' %}" class="btn btn-outline-primary btn-sm">
+                    <i class="fas fa-external-link-alt me-1"></i> Управление в админке
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Примеры кормов -->
+    <div class="col-md-6 mb-4">
+        <div class="card h-100">
+            <div class="card-header bg-success text-white">
+                <h4><i class="fas fa-utensils me-2"></i>Примеры кормов</h4>
+            </div>
+            <div class="card-body">
+                {% if sample_foods %}
+                <div class="list-group">
+                    {% for food in sample_foods %}
+                    <div class="list-group-item">
+                        <div class="d-flex w-100 justify-content-between">
+                            <h5 class="mb-1">{{ food.name }}</h5>
+                            <span class="badge bg-info">{{ food.brand }}</span>
+                        </div>
+                        <p class="mb-1">
+                            <strong>Калории:</strong> {{ food.calories }} ккал/100г<br>
+                            <strong>Белок/Жир:</strong> {{ food.protein }}% / {{ food.fat }}%<br>
+                            <strong>Цена:</strong> {{ food.price }} руб/кг
+                        </p>
+                        <small class="text-muted">{{ food.suitable_for }}</small>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% else %}
+                <p class="text-muted">Нет данных о кормах</p>
+                {% endif %}
+            </div>
+            <div class="card-footer">
+                <a href="{% url 'admin:pets_food_changelist' %}" class="btn btn-outline-success btn-sm">
+                    <i class="fas fa-external-link-alt me-1"></i> Управление в админке
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Панель администрирования -->
+<div class="row mt-4">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header bg-warning">
+                <h4><i class="fas fa-user-shield me-2"></i>Панель администрирования</h4>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h5>Доступ к админке</h5>
+                        <p>Для входа в админ-панель используйте:</p>
+                        <div class="alert alert-dark">
+                            <strong>Логин:</strong> admin<br>
+                            <strong>Пароль:</strong> admin123<br>
+                            <strong>Ссылка:</strong> <a href="/admin/">/admin/</a>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <h5>Демо-пользователь</h5>
+                        <p>Для тестирования функционала пользователя:</p>
+                        <div class="alert alert-info">
+                            <strong>Логин:</strong> demo<br>
+                            <strong>Пароль:</strong> demo123<br>
+                            <small>Или создайте своего пользователя через регистрацию</small>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mt-4">
+                    <h5>Что можно сделать в админке:</h5>
+                    <ul>
+                        <li>Просматривать и редактировать всех пользователей</li>
+                        <li>Управлять питомцами и их данными</li>
+                        <li>Добавлять новые корма в базу</li>
+                        <li>Настраивать планы питания</li>
+                        <li>Просматривать статистику системы</li>
+                    </ul>
+                    
+                    <div class="text-center mt-4">
+                        <a href="/admin/" class="btn btn-warning btn-lg">
+                            <i class="fas fa-sign-in-alt me-2"></i> Перейти в админ-панель
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -3,6 +3,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .models import Pet, Food
 from .forms import PetForm, FoodForm
+from django.contrib.auth.models import User
+from django.contrib.admin.views.decorators import staff_member_required
 
 
 @login_required
@@ -237,3 +239,27 @@ def import_food(request, food_id):
             messages.info(request, f'Корм "{food.name}" уже был в базе (обновлен).')
 
     return redirect('search_food_api')
+
+
+@staff_member_required
+def admin_demo(request):
+    users_count = User.objects.count()
+    pets_count = Pet.objects.count()
+    foods_count = Food.objects.count()
+    from calculations.models import DietPlan
+    plans_count = DietPlan.objects.count()
+
+    sample_pets = Pet.objects.all().order_by('?')[:5]
+    sample_foods = Food.objects.all().order_by('?')[:5]
+
+    context = {
+        'users_count': users_count,
+        'pets_count': pets_count,
+        'foods_count': foods_count,
+        'plans_count': plans_count,
+        'sample_pets': sample_pets,
+        'sample_foods': sample_foods,
+        'page_title': 'Демо: Админка и тестовые данные',
+        'page_subtitle': 'Демонстрация работы системы администрирования',
+    }
+    return render(request, 'admin_demo.html', context)
