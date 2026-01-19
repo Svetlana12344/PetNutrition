@@ -1,0 +1,204 @@
+{% extends 'base.html' %}
+
+{% block title %}Добавить питомца - PetNutrition{% endblock %}
+
+{% block page_title %}Добавить нового питомца{% endblock %}
+{% block page_subtitle %}Заполните информацию о вашем питомце{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="mb-0"><i class="fas fa-paw me-2"></i>Основная информация</h4>
+            </div>
+            <div class="card-body">
+                <form method="post" novalidate>
+                    {% csrf_token %}
+
+                    <!-- Поле для клички -->
+                    <div class="row mb-4">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="{{ form.name.id_for_label }}" class="form-label fw-bold">
+                                    {{ form.name.label }} *
+                                </label>
+                                {{ form.name }}
+                                {% if form.name.errors %}
+                                <div class="text-danger small mt-1">
+                                    {% for error in form.name.errors %}
+                                    <i class="fas fa-exclamation-circle"></i> {{ error }}
+                                    {% endfor %}
+                                </div>
+                                {% endif %}
+                                {% if form.name.help_text %}
+                                <div class="form-text">{{ form.name.help_text }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="{{ form.pet_type.id_for_label }}" class="form-label fw-bold">
+                                    {{ form.pet_type.label }} *
+                                </label>
+                                {{ form.pet_type }}
+                                {% if form.pet_type.errors %}
+                                <div class="text-danger small mt-1">
+                                    {% for error in form.pet_type.errors %}
+                                    <i class="fas fa-exclamation-circle"></i> {{ error }}
+                                    {% endfor %}
+                                </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Поле для породы -->
+                    <div class="row mb-4">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="{{ form.breed.id_for_label }}" class="form-label fw-bold">
+                                    {{ form.breed.label }}
+                                </label>
+                                {{ form.breed }}
+                                {% if form.breed.errors %}
+                                <div class="text-danger small mt-1">
+                                    {% for error in form.breed.errors %}
+                                    <i class="fas fa-exclamation-circle"></i> {{ error }}
+                                    {% endfor %}
+                                </div>
+                                {% endif %}
+                                <div class="form-text">
+                                    Например: Лабрадор, Сиамская, Вислоухий
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="{{ form.age.id_for_label }}" class="form-label fw-bold">
+                                    {{ form.age.label }} *
+                                </label>
+                                {{ form.age }}
+                                {% if form.age.errors %}
+                                <div class="text-danger small mt-1">
+                                    {% for error in form.age.errors %}
+                                    <i class="fas fa-exclamation-circle"></i> {{ error }}
+                                    {% endfor %}
+                                </div>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="{{ form.weight.id_for_label }}" class="form-label fw-bold">
+                                    {{ form.weight.label }} *
+                                </label>
+                                <div class="input-group">
+                                    {{ form.weight }}
+                                    <span class="input-group-text">кг</span>
+                                </div>
+                                {% if form.weight.errors %}
+                                <div class="text-danger small mt-1">
+                                    {% for error in form.weight.errors %}
+                                    <i class="fas fa-exclamation-circle"></i> {{ error }}
+                                    {% endfor %}
+                                </div>
+                                {% endif %}
+                                {% if form.weight.help_text %}
+                                <div class="form-text">{{ form.weight.help_text }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Уровень активности и цель -->
+                    <div class="row mb-4">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="{{ form.activity_level.id_for_label }}" class="form-label fw-bold">
+                                    {{ form.activity_level.label }} *
+                                </label>
+                                {{ form.activity_level }}
+                                {% if form.activity_level.errors %}
+                                <div class="text-danger small mt-1">
+                                    {% for error in form.activity_level.errors %}
+                                    <i class="fas fa-exclamation-circle"></i> {{ error }}
+                                    {% endfor %}
+                                </div>
+                                {% endif %}
+                                <div class="form-text">
+                                    <small>
+                                        <i class="fas fa-info-circle text-primary"></i>
+                                        <strong>Низкая:</strong> в основном дома, мало активности<br>
+                                        <strong>Средняя:</strong> регулярные прогулки/игры<br>
+                                        <strong>Высокая:</strong> очень активный, спортивная собака
+                                    </small>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="{{ form.goal.id_for_label }}" class="form-label fw-bold">
+                                    {{ form.goal.label }} *
+                                </label>
+                                {{ form.goal }}
+                                {% if form.goal.errors %}
+                                <div class="text-danger small mt-1">
+                                    {% for error in form.goal.errors %}
+                                    <i class="fas fa-exclamation-circle"></i> {{ error }}
+                                    {% endfor %}
+                                </div>
+                                {% endif %}
+                                {% if form.goal.help_text %}
+                                <div class="form-text">{{ form.goal.help_text }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Кнопки формы -->
+                    <div class="row mt-4">
+                        <div class="col-12">
+                            <div class="d-flex justify-content-between">
+                                <a href="{% url 'pet_list' %}" class="btn btn-secondary">
+                                    <i class="fas fa-arrow-left me-1"></i> Назад к списку
+                                </a>
+                                <button type="submit" class="btn btn-primary btn-lg">
+                                    <i class="fas fa-save me-1"></i> Сохранить питомца
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Информационная панель -->
+                    <div class="alert alert-info mt-4">
+                        <h5 class="alert-heading"><i class="fas fa-lightbulb me-2"></i>Совет</h5>
+                        <p class="mb-0">
+                            После добавления питомца система автоматически рассчитает
+                            его суточную норму калорий и предложит подходящие корма.
+                        </p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% block extra_js %}
+<script>
+// JavaScript для улучшения UX
+document.addEventListener('DOMContentLoaded', function() {
+    // Автоматический фокус на поле клички
+    document.getElementById('{{ form.name.id_for_label }}').focus();
+
+    // Подсказки при наведении
+    const tooltips = document.querySelectorAll('[data-bs-toggle="tooltip"]');
+    tooltips.forEach(el => new bootstrap.Tooltip(el));
+});
+</script>
+{% endblock %}
+{% endblock %}

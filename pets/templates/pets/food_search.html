@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-8 mx-auto">
+        <h2>Поиск кормов</h2>
+        
+        <form method="get" class="mb-4">
+            <div class="input-group">
+                <input type="text" name="q" class="form-control" 
+                       placeholder="Название корма..." value="{{ query }}">
+                <button class="btn btn-primary" type="submit">Найти</button>
+            </div>
+        </form>
+        
+        {% if results %}
+        <div class="list-group">
+            {% for food in results %}
+            <div class="list-group-item">
+                <div class="d-flex w-100 justify-content-between">
+                    <h5 class="mb-1">{{ food.name }}</h5>
+                    <span class="badge bg-primary">{{ food.brand }}</span>
+                </div>
+                <p class="mb-1">
+                    Калории: {{ food.calories }} ккал/100г<br>
+                    Белок: {{ food.protein }}% | Жир: {{ food.fat }}%
+                </p>
+                <small>Цена: {{ food.price }} руб.</small>
+                <div class="mt-2">
+                    <form method="post" action="{% url 'import_food' food.id %}">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-success btn-sm">
+                            Добавить в базу
+                        </button>
+                    </form>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% elif query %}
+        <div class="alert alert-warning">
+            Ничего не найдено по запросу "{{ query }}"
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

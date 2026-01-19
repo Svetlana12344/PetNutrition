@@ -1,15 +1,13 @@
 from django.contrib import admin
 from django.urls import path, include
-from pets.views import home
+from django.shortcuts import render
+
+def home(request):
+    """Главная страница"""
+    return render(request, 'home.html')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', home, name='home'),
     path('pets/', include('pets.urls')),
-]
-
-urlpatterns = [
-    path('admin/', admin.site.urls),
     path('', home, name='home'),
-    path('pets/', include('pets.urls')),
 ]

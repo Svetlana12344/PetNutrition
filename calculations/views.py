@@ -1,7 +1,6 @@
-from django.shortcuts import render, redirect
-from django.contrib.auth.decorators import login_required
+from django.shortcuts import render, redirect, get_object_or_404
 from pets.models import Pet
-
+from .charts import generate_weight_chart, generate_nutrition_chart, generate_calorie_comparison
 
 @login_required
 def calculate_diet(request):
@@ -50,3 +49,47 @@ def calculate_diet(request):
     # GET запрос - показать форму
     user_pets = Pet.objects.filter(owner=request.user)
     return render(request, 'calculations/calculator.html', {'pets': user_pets})
+
+
+@login_required
+def pet_statistics(request, pet_id):
+    """Страница со статистикой питомца"""
+    pet = get_object_or_404(Pet, id=pet_id, owner=request.user)
+
+    # Генерируем графики
+    weight_chart = generate_weight_chart(pet)
+
+    # Расчет рациона (упрощенный)
+    if pet.pet_type == 'dog':
+        calories = 30 * pet.weight + 70
+    else:
+        calories = 70 * (pet.weight ** 0.75)
+
+    context = {
+        'pet': pet,
+        'weight_chart': weight_chart,
+        'daily_calories': round(calories),
+        'protein_need': round(calories * 0.03, 1),
+        'fat_need': round(calories * 0.01, 1),
+    }
+
+    return render(request, 'calculations/statistics.html', context)
+
+
+@login_required
+def dashboard(request):
+    """Главная панель с графиками"""
+    user_pets = Pet.objects.filter(owner=request.user)
+
+    if user_pets:
+        comparison_chart = generate_calorie_comparison(user_pets)
+    else:
+        comparison_chart = None
+
+    context = {
+        'pets': user_pets,
+        'comparison_chart': comparison_chart,
+        'total_pets': user_pets.count(),
+    }
+
+    return render(request, 'calculations/dashboard.html', context)

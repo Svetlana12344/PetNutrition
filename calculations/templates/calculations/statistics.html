@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-8">
+        <h2>Статистика: {{ pet.name }}</h2>
+        
+        <div class="card mb-4">
+            <div class="card-header">
+                <h4>Динамика веса</h4>
+            </div>
+            <div class="card-body">
+                <img src="data:image/png;base64,{{ weight_chart }}" 
+                     alt="График веса" class="img-fluid">
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-header">
+                <h4>Нормы питания</h4>
+            </div>
+            <div class="card-body">
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                        <strong>Суточная норма калорий:</strong><br>
+                        <span class="h4 text-primary">{{ daily_calories }} ккал</span>
+                    </li>
+                    <li class="list-group-item">
+                        <strong>Белок:</strong> {{ protein_need }} г/день
+                    </li>
+                    <li class="list-group-item">
+                        <strong>Жиры:</strong> {{ fat_need }} г/день
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

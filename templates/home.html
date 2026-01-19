@@ -1,43 +1,63 @@
 {% extends 'base.html' %}
 
+{% block title %}PetNutrition - Оптимизация рациона для питомцев{% endblock %}
+
+{% block page_title %}Добро пожаловать в PetNutrition!{% endblock %}
+{% block page_subtitle %}Рассчитайте идеальный рацион для вашего питомца{% endblock %}
+
 {% block content %}
 <div class="row">
-    <div class="col-md-8">
-        <h1>Оптимизация рациона для ваших питомцев</h1>
-        <p class="lead">Рассчитайте идеальную суточную норму питания с учетом породы, возраста, веса и целей вашего питомца</p>
-        
-        <div class="row mt-5">
-            <div class="col-md-4">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">📊 Расчет нормы</h5>
-                        <p>Точный расчет калорий и БЖУ</p>
+    <div class="col-lg-8 mx-auto text-center">
+        <div class="card border-0 shadow-sm">
+            <div class="card-body p-5">
+                <i class="fas fa-paw fa-5x text-primary mb-4"></i>
+                <h1 class="display-5 fw-bold mb-3">PetNutrition</h1>
+                <p class="lead mb-4">
+                    Сервис для оптимизации рациона домашних животных.
+                    Рассчитайте суточную норму калорий, подберите подходящий корм
+                    и отслеживайте прогресс вашего питомца.
+                </p>
+
+                <div class="row mt-5">
+                    <div class="col-md-4 mb-4">
+                        <div class="card h-100 border-primary">
+                            <div class="card-body text-center">
+                                <i class="fas fa-calculator fa-3x text-primary mb-3"></i>
+                                <h4>Расчет нормы</h4>
+                                <p>Точный расчет калорий и БЖУ с учетом всех параметров</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 mb-4">
+                        <div class="card h-100 border-success">
+                            <div class="card-body text-center">
+                                <i class="fas fa-utensils fa-3x text-success mb-3"></i>
+                                <h4>Подбор корма</h4>
+                                <p>Рекомендации по питанию на основе анализа состава</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 mb-4">
+                        <div class="card h-100 border-warning">
+                            <div class="card-body text-center">
+                                <i class="fas fa-chart-line fa-3x text-warning mb-3"></i>
+                                <h4>Отслеживание</h4>
+                                <p>Контроль веса и визуализация прогресса</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">🍗 Подбор корма</h5>
-                        <p>Рекомендации по питанию</p>
-                    </div>
+
+                <div class="mt-5">
+                    <a href="{% url 'pet_list' %}" class="btn btn-primary btn-lg me-3">
+                        <i class="fas fa-dog me-2"></i> Мои питомцы
+                    </a>
+                    <a href="{% url 'add_pet' %}" class="btn btn-success btn-lg">
+                        <i class="fas fa-plus-circle me-2"></i> Добавить питомца
+                    </a>
                 </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">📈 Отслеживание</h5>
-                        <p>Контроль веса и прогресса</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-4">
-        <div class="card">
-            <div class="card-body">
-                <h5 class="card-title">Начать сейчас</h5>
-                <a href="/calculator/" class="btn btn-primary">Рассчитать рацион</a>
             </div>
         </div>
     </div>
