@@ -14,8 +14,3 @@ class FoodAdmin(admin.ModelAdmin):
     list_display = ('name', 'brand', 'food_type', 'calories', 'protein')
     list_filter = ('food_type', 'brand')
     search_fields = ('name', 'brand')
-
-
-from django.contrib import admin
-
-# Register your models here.

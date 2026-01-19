@@ -7,13 +7,9 @@ from .forms import PetForm, FoodForm
 
 @login_required
 def add_pet(request):
-    """
-    Страница добавления нового питомца
-    """
     if request.method == 'POST':
         form = PetForm(request.POST)
         if form.is_valid():
-            # Сохраняем питомца, привязывая к текущему пользователю
             pet = form.save(commit=False)
             pet.owner = request.user
             pet.save()
@@ -42,12 +38,8 @@ def add_pet(request):
 
 @login_required
 def pet_list(request):
-    """
-    Страница со списком всех питомцев пользователя
-    """
     pets = Pet.objects.filter(owner=request.user).order_by('-created_at')
 
-    # Статистика
     total_pets = pets.count()
     dogs_count = pets.filter(pet_type='dog').count()
     cats_count = pets.filter(pet_type='cat').count()
@@ -67,12 +59,8 @@ def pet_list(request):
 
 @login_required
 def pet_detail(request, pet_id):
-    """
-    Детальная страница питомца
-    """
     pet = get_object_or_404(Pet, id=pet_id, owner=request.user)
 
-    # Простые расчеты для демонстрации
     if pet.pet_type == 'dog':
         daily_calories = 30 * pet.weight + 70
     elif pet.pet_type == 'cat':
@@ -80,14 +68,12 @@ def pet_detail(request, pet_id):
     else:
         daily_calories = 50 * pet.weight
 
-    # Коэффициенты активности
     activity_multipliers = {
         'low': 1.2,
         'medium': 1.4,
         'high': 1.6
     }
 
-    # Коэффициенты цели
     goal_multipliers = {
         'weight_loss': 0.8,
         'weight_gain': 1.2,
@@ -96,7 +82,6 @@ def pet_detail(request, pet_id):
         'pregnant': 1.5
     }
 
-    # Финальный расчет
     final_calories = daily_calories * \
                      activity_multipliers.get(pet.activity_level, 1.4) * \
                      goal_multipliers.get(pet.goal, 1.0)
@@ -104,8 +89,8 @@ def pet_detail(request, pet_id):
     context = {
         'pet': pet,
         'daily_calories': round(final_calories),
-        'protein_need': round(final_calories * 0.03, 1),  # 30% от калорий
-        'fat_need': round(final_calories * 0.01, 1),  # 10% от калорий
+        'protein_need': round(final_calories * 0.03, 1),
+        'fat_need': round(final_calories * 0.01, 1),
         'page_title': f'Профиль: {pet.name}',
         'page_subtitle': f'{pet.get_pet_type_display()} | {pet.breed}',
     }
@@ -114,9 +99,6 @@ def pet_detail(request, pet_id):
 
 @login_required
 def edit_pet(request, pet_id):
-    """
-    Редактирование питомца
-    """
     pet = get_object_or_404(Pet, id=pet_id, owner=request.user)
 
     if request.method == 'POST':
@@ -139,9 +121,6 @@ def edit_pet(request, pet_id):
 
 @login_required
 def delete_pet(request, pet_id):
-    """
-    Удаление питомца (будет реализовано позже)
-    """
     pet = get_object_or_404(Pet, id=pet_id, owner=request.user)
     pet_name = pet.name
     pet.delete()
@@ -151,12 +130,8 @@ def delete_pet(request, pet_id):
 
 
 def search_food_api(request):
-    """
-    Поиск кормов через API (заглушка для демонстрации)
-    """
     query = request.GET.get('q', '')
 
-    # Имитация данных API
     mock_foods = [
         {
             'id': 1,
@@ -190,7 +165,6 @@ def search_food_api(request):
         }
     ]
 
-    # Фильтрация по запросу
     results = []
     if query:
         for food in mock_foods:
@@ -198,7 +172,7 @@ def search_food_api(request):
                     query.lower() in food['brand'].lower():
                 results.append(food)
     else:
-        results = mock_foods[:5]  # Первые 5 результатов если нет запроса
+        results = mock_foods[:5]
 
     context = {
         'results': results,
@@ -212,10 +186,6 @@ def search_food_api(request):
 
 @login_required
 def import_food(request, food_id):
-    """
-    Импорт корма из API в базу данных
-    """
-    # Имитация получения данных из API
     mock_foods = {
         1: {
             'name': 'Royal Canin для взрослых собак',
@@ -244,7 +214,6 @@ def import_food(request, food_id):
     food_data = mock_foods.get(food_id)
 
     if food_data:
-        # Сохраняем в базу данных
         food, created = Food.objects.update_or_create(
             name=food_data['name'],
             brand=food_data['brand'],

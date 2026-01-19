@@ -1,30 +1,24 @@
 import matplotlib.pyplot as plt
 import matplotlib
-
-matplotlib.use('Agg')  # Важно для работы в Django
 from io import BytesIO
 import base64
 import pandas as pd
 from datetime import datetime, timedelta
 import random
 
+matplotlib.use('Agg')
 
 def generate_weight_chart(pet, days=30):
-    """Генерация графика изменения веса"""
-    # Имитация данных веса
     dates = [(datetime.now() - timedelta(days=i)).date()
              for i in range(days, 0, -1)]
 
-    # Создаем реалистичную траекторию веса
     base_weight = pet.weight
     weights = []
     current = base_weight
 
     for i in range(days):
-        # Небольшие случайные колебания
         change = random.uniform(-0.2, 0.3)
 
-        # Тренд в зависимости от цели
         if pet.goal == 'weight_loss':
             trend = -0.05
         elif pet.goal == 'weight_gain':
@@ -35,11 +29,9 @@ def generate_weight_chart(pet, days=30):
         current += change + trend
         weights.append(round(current, 1))
 
-    # Создаем график
     plt.figure(figsize=(10, 5))
     plt.plot(dates, weights, marker='o', linewidth=2, color='#2E86AB')
 
-    # Добавляем целевую линию
     plt.axhline(y=pet.weight, color='r', linestyle='--',
                 label=f'Текущий вес: {pet.weight} кг')
 
@@ -51,7 +43,6 @@ def generate_weight_chart(pet, days=30):
     plt.tight_layout()
     plt.legend()
 
-    # Конвертируем в base64 для HTML
     buffer = BytesIO()
     plt.savefig(buffer, format='png', dpi=100)
     buffer.seek(0)
@@ -65,15 +56,13 @@ def generate_weight_chart(pet, days=30):
 
 
 def generate_nutrition_chart(diet_plan):
-    """Генерация круговой диаграммы БЖУ"""
-    # Рассчитываем проценты
-    total = diet_plan.protein_need + diet_plan.fat_need + 50  # 50 - углеводы
+    total = diet_plan.protein_need + diet_plan.fat_need + 50
 
     labels = ['Белки', 'Жиры', 'Углеводы']
     sizes = [
         diet_plan.protein_need,
         diet_plan.fat_need,
-        50  # Условное значение углеводов
+        50
     ]
     colors = ['#4ECDC4', '#FF6B6B', '#FFE66D']
 
@@ -95,12 +84,10 @@ def generate_nutrition_chart(diet_plan):
 
 
 def generate_calorie_comparison(pets):
-    """Сравнение калорийности для нескольких питомцев"""
     pet_names = [pet.name for pet in pets]
     calories = []
 
     for pet in pets:
-        # Расчет калорий (упрощенный)
         if pet.pet_type == 'dog':
             calories_needed = 30 * pet.weight + 70
         else:  # cat
@@ -110,7 +97,6 @@ def generate_calorie_comparison(pets):
     plt.figure(figsize=(8, 5))
     bars = plt.bar(pet_names, calories, color=['#2E86AB', '#A23B72', '#F18F01'])
 
-    # Добавляем значения на столбцы
     for bar, value in zip(bars, calories):
         plt.text(bar.get_x() + bar.get_width() / 2, bar.get_height() + 10,
                  f'{value} ккал', ha='center', va='bottom')

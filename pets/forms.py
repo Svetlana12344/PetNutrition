@@ -3,13 +3,11 @@ from .models import Pet, Food
 
 
 class PetForm(forms.ModelForm):
-    """Форма для добавления/редактирования питомца"""
 
     class Meta:
         model = Pet
         fields = ['name', 'pet_type', 'breed', 'age', 'weight', 'activity_level', 'goal']
 
-        # Виджеты для красивого отображения
         widgets = {
             'name': forms.TextInput(attrs={
                 'class': 'form-control',
@@ -37,7 +35,6 @@ class PetForm(forms.ModelForm):
             'goal': forms.Select(attrs={'class': 'form-select'}),
         }
 
-        # Подписи полей на русском
         labels = {
             'name': 'Кличка питомца',
             'pet_type': 'Вид животного',
@@ -48,7 +45,6 @@ class PetForm(forms.ModelForm):
             'goal': 'Цель',
         }
 
-        # Подсказки для полей
         help_texts = {
             'weight': 'Укажите текущий вес питомца в килограммах',
             'activity_level': 'Насколько активен ваш питомец?',
@@ -56,7 +52,6 @@ class PetForm(forms.ModelForm):
         }
 
     def clean_weight(self):
-        """Проверка веса"""
         weight = self.cleaned_data.get('weight')
         if weight <= 0:
             raise forms.ValidationError("Вес должен быть положительным числом")
@@ -65,7 +60,6 @@ class PetForm(forms.ModelForm):
         return weight
 
     def clean_age(self):
-        """Проверка возраста"""
         age = self.cleaned_data.get('age')
         if age < 0:
             raise forms.ValidationError("Возраст не может быть отрицательным")
@@ -74,16 +68,13 @@ class PetForm(forms.ModelForm):
         return age
 
     def clean(self):
-        """Дополнительные проверки"""
         cleaned_data = super().clean()
         pet_type = cleaned_data.get('pet_type')
         weight = cleaned_data.get('weight')
 
-        # Проверка для кошек
         if pet_type == 'cat' and weight and weight > 15:
             self.add_error('weight', "Кошки редко весят больше 15 кг. Проверьте данные.")
 
-        # Проверка для собак мелких пород
         if pet_type == 'dog' and cleaned_data.get('breed', '').lower() in ['чихуахуа', 'йорк', 'тойтерьер']:
             if weight and weight > 5:
                 self.add_error('weight', "Для мелкой породы вес кажется слишком большим")
@@ -92,8 +83,6 @@ class PetForm(forms.ModelForm):
 
 
 class FoodForm(forms.ModelForm):
-    """Форма для добавления корма"""
-
     class Meta:
         model = Food
         fields = ['name', 'brand', 'food_type', 'calories', 'protein', 'fat', 'fiber', 'price', 'suitable_for']

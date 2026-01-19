@@ -16,21 +16,17 @@ env/
 .env.test.local
 .env.production.local
 
-# IDE
 .idea/
 .vscode/
 *.swp
 *.swo
 
-# OS
 .DS_Store
 Thumbs.db
 
-# Media files
 media/
 staticfiles/
 
-# Другие
 *.sqlite3
 *.db
 *.bak

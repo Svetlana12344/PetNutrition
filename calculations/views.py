@@ -2,32 +2,27 @@ from django.shortcuts import render, redirect, get_object_or_404
 from pets.models import Pet
 from .charts import generate_weight_chart, generate_nutrition_chart, generate_calorie_comparison
 
-@login_required
+
 def calculate_diet(request):
     if request.method == 'POST':
-        # Здесь будет логика расчета
         pet_id = request.POST.get('pet_id')
         pet = Pet.objects.get(id=pet_id)
 
-        # Формула расчета базового метаболизма для собак
         if pet.pet_type == 'dog':
             if pet.weight <= 10:
-                rer = 70 * (pet.weight ** 0.75)  # Базовая формула
+                rer = 70 * (pet.weight ** 0.75)
             else:
                 rer = 30 * pet.weight + 70
 
-        # Формула для кошек
         elif pet.pet_type == 'cat':
             rer = 70 * (pet.weight ** 0.75)
 
-        # Коэффициент активности
         activity_multiplier = {
             'low': 1.2,
             'medium': 1.4,
             'high': 1.6
         }.get(pet.activity_level, 1.4)
 
-        # Коэффициент цели
         goal_multiplier = {
             'weight_loss': 0.8,
             'weight_gain': 1.2,
@@ -41,25 +36,21 @@ def calculate_diet(request):
         context = {
             'pet': pet,
             'daily_calories': round(daily_calories),
-            'protein_need': round(daily_calories * 0.03),  # 30% от калорий
-            'fat_need': round(daily_calories * 0.01),  # 10% от калорий
+            'protein_need': round(daily_calories * 0.03),
+            'fat_need': round(daily_calories * 0.01),
         }
         return render(request, 'calculations/result.html', context)
 
-    # GET запрос - показать форму
     user_pets = Pet.objects.filter(owner=request.user)
     return render(request, 'calculations/calculator.html', {'pets': user_pets})
 
 
-@login_required
+
 def pet_statistics(request, pet_id):
-    """Страница со статистикой питомца"""
     pet = get_object_or_404(Pet, id=pet_id, owner=request.user)
 
-    # Генерируем графики
     weight_chart = generate_weight_chart(pet)
 
-    # Расчет рациона (упрощенный)
     if pet.pet_type == 'dog':
         calories = 30 * pet.weight + 70
     else:
@@ -76,9 +67,8 @@ def pet_statistics(request, pet_id):
     return render(request, 'calculations/statistics.html', context)
 
 
-@login_required
+
 def dashboard(request):
-    """Главная панель с графиками"""
     user_pets = Pet.objects.filter(owner=request.user)
 
     if user_pets:

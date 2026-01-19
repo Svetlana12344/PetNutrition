@@ -5,7 +5,6 @@ from django.dispatch import receiver
 
 
 class UserProfile(models.Model):
-    """Расширенный профиль пользователя"""
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     phone = models.CharField(max_length=20, blank=True, verbose_name="Телефон")
     address = models.TextField(blank=True, verbose_name="Адрес")
@@ -19,12 +18,10 @@ class UserProfile(models.Model):
 
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
-    """Автоматическое создание профиля при создании пользователя"""
     if created:
         UserProfile.objects.create(user=instance)
 
 
 @receiver(post_save, sender=User)
 def save_user_profile(sender, instance, **kwargs):
-    """Сохранение профиля при сохранении пользователя"""
     instance.userprofile.save()

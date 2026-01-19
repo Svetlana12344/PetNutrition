@@ -26,7 +26,6 @@ class UserRegisterForm(UserCreationForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        # Добавляем классы Bootstrap ко всем полям
         for field_name in self.fields:
             self.fields[field_name].widget.attrs.update({'class': 'form-control'})
 

@@ -3,7 +3,6 @@ from django.contrib.auth.models import User
 
 
 class Pet(models.Model):
-    """Модель питомца"""
     PET_TYPES = [
         ('dog', 'Собака'),
         ('cat', 'Кошка'),
@@ -39,7 +38,6 @@ class Pet(models.Model):
 
 
 class Food(models.Model):
-    """Модель корма"""
     FOOD_TYPES = [
         ('dry', 'Сухой корм'),
         ('wet', 'Влажный корм'),
@@ -60,8 +58,3 @@ class Food(models.Model):
 
     def __str__(self):
         return f"{self.brand} - {self.name}"
-
-
-from django.db import models
-
-# Create your models here.

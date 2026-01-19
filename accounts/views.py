@@ -7,13 +7,11 @@ from django.contrib.auth.forms import AuthenticationForm
 
 
 def register(request):
-    """Регистрация нового пользователя"""
     if request.method == 'POST':
         form = UserRegisterForm(request.POST)
         if form.is_valid():
             user = form.save()
 
-            # Автоматический вход после регистрации
             login(request, user)
 
             messages.success(request, f'Аккаунт создан для {user.username}!')
@@ -25,7 +23,6 @@ def register(request):
 
 
 def custom_login(request):
-    """Кастомная страница входа"""
     if request.method == 'POST':
         form = AuthenticationForm(request, data=request.POST)
         if form.is_valid():
@@ -45,7 +42,6 @@ def custom_login(request):
 
 @login_required
 def profile(request):
-    """Страница профиля пользователя"""
     user_profile = request.user.userprofile
 
     if request.method == 'POST':
@@ -62,7 +58,6 @@ def profile(request):
 
 @login_required
 def dashboard(request):
-    """Личный кабинет пользователя"""
     from pets.models import Pet
     from calculations.models import DietPlan
 
