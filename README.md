@@ -21,7 +21,11 @@
 ### Requests
 
 ##  Скриншоты
+
 <img width="1442" height="898" alt="image" src="https://github.com/user-attachments/assets/f45656ed-b0cf-49b7-8cd8-2dfeb5401f29" />
+
+<img width="1115" height="837" alt="image" src="https://github.com/user-attachments/assets/3008a04a-31c8-43ba-aa3b-d6cb90b53eb9" />
+
 
 ##  Установка
 
