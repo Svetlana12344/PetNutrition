@@ -26,7 +26,6 @@
 
 <img width="1115" height="837" alt="image" src="https://github.com/user-attachments/assets/3008a04a-31c8-43ba-aa3b-d6cb90b53eb9" />
 
-
 ##  Установка
 
 1. Клонируйте репозиторий
