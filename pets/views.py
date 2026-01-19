@@ -5,7 +5,7 @@ from .models import Pet, Food
 from .forms import PetForm, FoodForm
 
 
-@login_required
+#  @login_required
 def add_pet(request):
     if request.method == 'POST':
         form = PetForm(request.POST)
@@ -36,7 +36,7 @@ def add_pet(request):
     return render(request, 'pets/add_pet.html', context)
 
 
-@login_required
+# @login_required
 def pet_list(request):
     pets = Pet.objects.filter(owner=request.user).order_by('-created_at')
 
@@ -57,7 +57,7 @@ def pet_list(request):
     return render(request, 'pets/pet_list.html', context)
 
 
-@login_required
+# @login_required
 def pet_detail(request, pet_id):
     pet = get_object_or_404(Pet, id=pet_id, owner=request.user)
 

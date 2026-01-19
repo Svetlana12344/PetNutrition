@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from pets.models import Pet
 from .charts import generate_weight_chart, generate_nutrition_chart, generate_calorie_comparison
 
-
+@login_required
 def calculate_diet(request):
     if request.method == 'POST':
         pet_id = request.POST.get('pet_id')
@@ -45,7 +45,7 @@ def calculate_diet(request):
     return render(request, 'calculations/calculator.html', {'pets': user_pets})
 
 
-
+@login_required
 def pet_statistics(request, pet_id):
     pet = get_object_or_404(Pet, id=pet_id, owner=request.user)
 
@@ -67,7 +67,7 @@ def pet_statistics(request, pet_id):
     return render(request, 'calculations/statistics.html', context)
 
 
-
+@login_required
 def dashboard(request):
     user_pets = Pet.objects.filter(owner=request.user)
 
