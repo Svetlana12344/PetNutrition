@@ -113,4 +113,3 @@ class FoodForm(forms.ModelForm):
             'price': 'Цена (руб/кг)',
             'suitable_for': 'Подходит для',
         }
-        
