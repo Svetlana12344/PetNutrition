@@ -1,9 +1,9 @@
 {% extends 'base.html' %}
 
-{% block title %}Мои питомцы - PetNutrition{% endblock %}
+{% block title %}Питомцы - PetNutrition{% endblock %}
 
-{% block page_title %}Мои питомцы{% endblock %}
-{% block page_subtitle %}{{ page_subtitle }}{% endblock %}
+{% block page_title %}Все питомцы{% endblock %}
+{% block page_subtitle %}Список животных в системе{% endblock %}
 
 {% block content %}
 <div class="row mb-4">
@@ -23,7 +23,7 @@
                 <div class="row text-center">
                     <div class="col-md-3">
                         <div class="p-3 border rounded bg-light">
-                            <h2 class="text-primary">{{ total_pets }}</h2>
+                            <h2 class="text-primary">{{ total_pets|default:"0" }}</h2>
                             <p class="mb-0">Всего питомцев</p>
                         </div>
                     </div>
@@ -72,23 +72,14 @@
                     <strong><i class="fas fa-dna text-primary me-1"></i> Порода:</strong> {{ pet.breed|default:"Не указана" }}<br>
                     <strong><i class="fas fa-birthday-cake text-success me-1"></i> Возраст:</strong> {{ pet.age }} лет<br>
                     <strong><i class="fas fa-weight text-warning me-1"></i> Вес:</strong> {{ pet.weight }} кг<br>
-                    <strong><i class="fas fa-bullseye text-danger me-1"></i> Цель:</strong> {{ pet.get_goal_display }}<br>
-                    <strong><i class="fas fa-running text-info me-1"></i> Активность:</strong> {{ pet.get_activity_level_display }}
+                    <strong><i class="fas fa-bullseye text-danger me-1"></i> Цель:</strong> {{ pet.get_goal_display|default:"Не указана" }}<br>
+                    <strong><i class="fas fa-running text-info me-1"></i> Активность:</strong> {{ pet.get_activity_level_display|default:"Не указана" }}
                 </p>
             </div>
             <div class="card-footer bg-transparent">
-                <div class="btn-group w-100" role="group">
-                    <a href="{% url 'pet_detail' pet.id %}" class="btn btn-outline-primary btn-sm">
-                        <i class="fas fa-eye me-1"></i> Подробнее
-                    </a>
-                    <a href="{% url 'edit_pet' pet.id %}" class="btn btn-outline-warning btn-sm">
-                        <i class="fas fa-edit me-1"></i> Изменить
-                    </a>
-                    <a href="#" class="btn btn-outline-danger btn-sm"
-                       onclick="return confirm('Удалить питомца {{ pet.name }}?')">
-                        <i class="fas fa-trash me-1"></i> Удалить
-                    </a>
-                </div>
+                <a href="{% url 'pet_detail' pet.id %}" class="btn btn-outline-primary btn-sm">
+                    <i class="fas fa-eye me-1"></i> Подробнее
+                </a>
             </div>
         </div>
     </div>
@@ -100,10 +91,10 @@
         <div class="card text-center">
             <div class="card-body py-5">
                 <i class="fas fa-paw fa-5x text-muted mb-4"></i>
-                <h3 class="text-muted mb-3">У вас пока нет питомцев</h3>
-                <p class="text-muted mb-4">Добавьте своего первого питомца, чтобы начать работу с системой</p>
+                <h3 class="text-muted mb-3">Питомцев пока нет</h3>
+                <p class="text-muted mb-4">Добавьте первого питомца, чтобы начать работу</p>
                 <a href="{% url 'add_pet' %}" class="btn btn-primary btn-lg">
-                    <i class="fas fa-plus-circle me-2"></i> Добавить первого питомца
+                    <i class="fas fa-plus-circle me-2"></i> Добавить питомца
                 </a>
             </div>
         </div>

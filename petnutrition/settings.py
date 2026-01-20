@@ -19,7 +19,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'pets',
     'calculations',
-    'accounts',
 ]
 
 MIDDLEWARE = [
@@ -37,7 +36,7 @@ ROOT_URLCONF = 'petnutrition.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],  # ✅ ВАЖНО!
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -97,6 +96,3 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
-
-

@@ -3,7 +3,7 @@
 {% block title %}{{ pet.name }} - PetNutrition{% endblock %}
 
 {% block page_title %}{{ pet.name }}{% endblock %}
-{% block page_subtitle %}{{ pet.get_pet_type_display }} | {{ pet.breed }}{% endblock %}
+{% block page_subtitle %}{{ pet.get_pet_type_display }} | {{ pet.breed|default:"Порода не указана" }}{% endblock %}
 
 {% block content %}
 <div class="row">
@@ -42,11 +42,11 @@
                             </tr>
                             <tr>
                                 <th>Активность:</th>
-                                <td>{{ pet.get_activity_level_display }}</td>
+                                <td>{{ pet.get_activity_level_display|default:"Не указана" }}</td>
                             </tr>
                             <tr>
                                 <th>Цель:</th>
-                                <td>{{ pet.get_goal_display }}</td>
+                                <td>{{ pet.get_goal_display|default:"Не указана" }}</td>
                             </tr>
                             <tr>
                                 <th>Дата добавления:</th>
@@ -57,7 +57,7 @@
                 </div>
             </div>
         </div>
-        
+
         <div class="card">
             <div class="card-header bg-primary text-white">
                 <h4><i class="fas fa-calculator me-2"></i>Расчет питания</h4>
@@ -66,8 +66,8 @@
                 {% if daily_calories %}
                 <div class="alert alert-success">
                     <h5><i class="fas fa-check-circle me-2"></i>Рекомендации по питанию</h5>
-                    <p>Основываясь на параметрах вашего питомца, мы рекомендуем:</p>
-                    
+                    <p>Основываясь на параметрах питомца, мы рекомендуем:</p>
+
                     <div class="row text-center mt-3">
                         <div class="col-md-4">
                             <div class="p-3 border rounded bg-light">
@@ -100,7 +100,7 @@
             </div>
         </div>
     </div>
-    
+
     <div class="col-md-4">
         <div class="card mb-4">
             <div class="card-header">
@@ -108,37 +108,37 @@
             </div>
             <div class="card-body">
                 <div class="d-grid gap-2">
-                    <a href="{% url 'edit_pet' pet.id %}" class="btn btn-warning">
-                        <i class="fas fa-edit me-1"></i> Редактировать
-                    </a>
                     <a href="{% url 'pet_list' %}" class="btn btn-secondary">
                         <i class="fas fa-arrow-left me-1"></i> Назад к списку
+                    </a>
+                    <a href="{% url 'add_pet' %}" class="btn btn-primary">
+                        <i class="fas fa-plus me-1"></i> Добавить нового
                     </a>
                 </div>
             </div>
         </div>
-        
+
         <div class="card">
             <div class="card-header bg-info text-white">
-                <h4><i class="fas fa-lightbulb me-2"></i>Советы</h4>
+                <h4><i class="fas fa-lightbulb me-2"></i>Советы по питанию</h4>
             </div>
             <div class="card-body">
                 <ul class="list-unstyled">
-                    <li class="mb-2">
-                        <i class="fas fa-check text-success me-2"></i>
-                        <small>Взвешивайте питомца раз в 2 недели</small>
-                    </li>
                     <li class="mb-2">
                         <i class="fas fa-check text-success me-2"></i>
                         <small>Разделите суточную норму на 2-3 кормления</small>
                     </li>
                     <li class="mb-2">
                         <i class="fas fa-check text-success me-2"></i>
-                        <small>Обеспечьте постоянный доступ к воде</small>
+                        <small>Обеспечьте постоянный доступ к чистой воде</small>
+                    </li>
+                    <li class="mb-2">
+                        <i class="fas fa-check text-success me-2"></i>
+                        <small>Взвешивайте питомца каждые 2 недели</small>
                     </li>
                     <li>
                         <i class="fas fa-check text-success me-2"></i>
-                        <small>Регулярно посещайте ветеринара</small>
+                        <small>Консультируйтесь с ветеринаром при изменении рациона</small>
                     </li>
                 </ul>
             </div>
