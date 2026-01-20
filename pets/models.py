@@ -6,9 +6,6 @@ class Pet(models.Model):
     PET_TYPES = [
         ('dog', 'Собака'),
         ('cat', 'Кошка'),
-        ('rabbit', 'Кролик'),
-        ('bird', 'Птица'),
-        ('other', 'Другое'),
     ]
 
     GOALS = [

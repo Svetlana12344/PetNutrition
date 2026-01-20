@@ -120,18 +120,28 @@
                             </a></li>
                             <li><hr class="dropdown-divider"></li>
                             <li>
-                                <a class="dropdown-item text-danger" href="#">
-                                    <i class="fas fa-sign-out-alt"></i> Выйти
-                                </a>
+                                <form method="post" action="{% url 'logout' %}" style="display:inline;">
+                                    {% csrf_token %}
+                                    <button type="submit" class="dropdown-item text-danger" style="border:none; background:none; width:100%; text-align:left;">
+                                        <i class="fas fa-sign-out-alt"></i> Выйти
+                                    </button>
+                                </form>
                             </li>
-                            {% if user.is_staff %}
-                            <li class="nav-item">
-                                <a class="nav-link" href="{% url 'admin_demo' %}">
-                                    <i class="fas fa-user-shield"></i> Админ-демо
-                                </a>
-                            </li>
-                            {% endif %}
                         </ul>
+                    </li>
+                    {% else %}
+                    <li class="nav-item">
+                        <a class="btn btn-outline-primary me-2" href="{% url 'login' %}">
+                            <i class="fas fa-sign-in-alt"></i> Войти
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="btn btn-primary" href="{% url 'register' %}">
+                            <i class="fas fa-user-plus"></i> Регистрация
+                        </a>
+                    </li>
+                    {% endif %}
+                </ul>
                     </li>
                     {% else %}
                     <li class="nav-item">
