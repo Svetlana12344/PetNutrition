@@ -8,10 +8,10 @@
 - **Зарегистрированный пользователь**: добавление питомцев, расчет рациона, отслеживание прогресса
   
 ## 3. Модели данных
--**Pet**: name, pet_type, breed, age, weight, activity_level, goal, owner (ForeignKey → User)
--**Food**: name, brand, food_type, calories, protein, fat, fiber, price, suitable_for
--**DietPlan**: pet (ForeignKey → Pet), daily_calories, protein_need, fat_need
--**FoodRecommendation**: diet_plan (ForeignKey → DietPlan), food (ForeignKey → Food), daily_amount
+**Pet**: name, pet_type, breed, age, weight, activity_level, goal, owner (ForeignKey → User)
+**Food**: name, brand, food_type, calories, protein, fat, fiber, price, suitable_for
+**DietPlan**: pet (ForeignKey → Pet), daily_calories, protein_need, fat_need
+**FoodRecommendation**: diet_plan (ForeignKey → DietPlan), food (ForeignKey → Food), daily_amount
 
 ## 4. Ключевой функционал
 1. Добавление питомца с параметрами через форму
