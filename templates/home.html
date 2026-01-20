@@ -7,121 +7,59 @@
 
 {% block content %}
 <div class="row">
-    <div class="col-lg-10 mx-auto">
-        <!-- Статистика -->
-        <div class="row mb-4">
-            <div class="col-md-3">
-                <div class="card text-center">
-                    <div class="card-body">
-                        <i class="fas fa-dog fa-3x text-primary mb-3"></i>
-                        <h3>{{ pets_count|default:"0" }}</h3>
-                        <p class="mb-0">Питомцев в системе</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="card text-center">
-                    <div class="card-body">
-                        <i class="fas fa-utensils fa-3x text-success mb-3"></i>
-                        <h3>{{ foods_count|default:"0" }}</h3>
-                        <p class="mb-0">Кормов в базе</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="card text-center">
-                    <div class="card-body">
-                        <i class="fas fa-calculator fa-3x text-warning mb-3"></i>
-                        <h3>{{ plans_count|default:"0" }}</h3>
-                        <p class="mb-0">Планов питания</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="card text-center">
-                    <div class="card-body">
-                        <i class="fas fa-users fa-3x text-info mb-3"></i>
-                        <h3>{{ users_count|default:"0" }}</h3>
-                        <p class="mb-0">Пользователей</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Как это работает -->
-        <div class="card mb-4">
-            <div class="card-header bg-primary text-white">
-                <h4 class="mb-0"><i class="fas fa-play-circle me-2"></i>Как это работает</h4>
-            </div>
-            <div class="card-body">
-                <div class="row text-center">
-                    <div class="col-md-3">
-                        <div class="step-number">1</div>
-                        <h5>Регистрация</h5>
-                        <p>Создайте аккаунт или войдите</p>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="step-number">2</div>
-                        <h5>Добавьте питомца</h5>
-                        <p>Укажите параметры питомца</p>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="step-number">3</div>
-                        <h5>Получите план</h5>
-                        <p>Система рассчитает рацион</p>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="step-number">4</div>
-                        <h5>Следите за прогрессом</h5>
-                        <p>Отслеживайте изменения веса</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Призыв к действию -->
-        <div class="card">
-            <div class="card-body text-center py-5">
-                <h2 class="mb-4">Начните прямо сейчас!</h2>
+    <div class="col-lg-8 mx-auto text-center">
+        <div class="card border-0 shadow-sm">
+            <div class="card-body p-5">
+                <i class="fas fa-paw fa-5x text-primary mb-4"></i>
+                <h1 class="display-5 fw-bold mb-3">PetNutrition</h1>
                 <p class="lead mb-4">
-                    Добавьте своего первого питомца и получите индивидуальный план питания
+                    Сервис для оптимизации рациона домашних животных.
+                    Рассчитайте суточную норму калорий, подберите подходящий корм
+                    и отслеживайте прогресс вашего питомца.
                 </p>
 
-                {% if user.is_authenticated %}
-                <div class="mt-4">
-                    <a href="{% url 'add_pet' %}" class="btn btn-primary btn-lg me-3">
-                        <i class="fas fa-plus-circle me-2"></i> Добавить питомца
-                    </a>
-                    <a href="{% url 'pet_list' %}" class="btn btn-outline-primary btn-lg">
+                <div class="row mt-5">
+                    <div class="col-md-4 mb-4">
+                        <div class="card h-100 border-primary">
+                            <div class="card-body text-center">
+                                <i class="fas fa-calculator fa-3x text-primary mb-3"></i>
+                                <h4>Расчет нормы</h4>
+                                <p>Точный расчет калорий и БЖУ с учетом всех параметров</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 mb-4">
+                        <div class="card h-100 border-success">
+                            <div class="card-body text-center">
+                                <i class="fas fa-utensils fa-3x text-success mb-3"></i>
+                                <h4>Подбор корма</h4>
+                                <p>Рекомендации по питанию на основе анализа состава</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 mb-4">
+                        <div class="card h-100 border-warning">
+                            <div class="card-body text-center">
+                                <i class="fas fa-chart-line fa-3x text-warning mb-3"></i>
+                                <h4>Отслеживание</h4>
+                                <p>Контроль веса и визуализация прогресса</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-5">
+                    <a href="{% url 'pet_list' %}" class="btn btn-primary btn-lg me-3">
                         <i class="fas fa-dog me-2"></i> Мои питомцы
                     </a>
-                </div>
-                {% else %}
-                <div class="mt-4">
-                    <a href="{% url 'register' %}" class="btn btn-primary btn-lg me-3">
-                        <i class="fas fa-user-plus me-2"></i> Зарегистрироваться
-                    </a>
-                    <a href="{% url 'login' %}" class="btn btn-outline-primary btn-lg">
-                        <i class="fas fa-sign-in-alt me-2"></i> Войти
+                    <a href="{% url 'add_pet' %}" class="btn btn-success btn-lg">
+                        <i class="fas fa-plus-circle me-2"></i> Добавить питомца
                     </a>
                 </div>
-                {% endif %}
             </div>
         </div>
     </div>
 </div>
-
-<style>
-.step-number {
-    width: 50px;
-    height: 50px;
-    line-height: 50px;
-    border-radius: 50%;
-    background: #2E86AB;
-    color: white;
-    font-size: 24px;
-    font-weight: bold;
-    margin: 0 auto 15px;
-}
-</style>
 {% endblock %}
