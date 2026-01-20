@@ -1,26 +1,26 @@
 # Техническое задание: PetNutrition
 
 ## 1. Цель проекта
-Разработка веб-сервиса для оптимизации рациона домашних животных с расчетом суточной нормы питания на основе индивидуальных параметров питомца.
+Разработка веб-сервиса, который поможет владельцам с оптимизации рациона домашних животных с расчетом суточной нормы питания на основе индивидуальных параметров питомца.
 
 ## 2. Роли пользователей
 - **Гость**: просмотр общей информации, демо-расчеты
 - **Зарегистрированный пользователь**: добавление питомцев, расчет рациона, отслеживание прогресса
-- **Администратор**: управление контентом, пользователями, статистика
-
+  
 ## 3. Модели данных
-**Pet (Питомец)**: name, pet_type, breed, age, weight, activity_level, goal, owner (ForeignKey → User)
-**Food (Корм)**: name, brand, food_type, calories, protein, fat, fiber, price, suitable_for
-**DietPlan (План питания)**: pet (ForeignKey → Pet), daily_calories, protein_need, fat_need
-**FoodRecommendation (Рекомендация)**: diet_plan (ForeignKey → DietPlan), food (ForeignKey → Food), daily_amount
+**Pet**: name, pet_type, breed, age, weight, activity_level, goal, owner (ForeignKey → User)
+
+**Food**: name, brand, food_type, calories, protein, fat, fiber, price, suitable_for
+
+**DietPlan**: pet (ForeignKey → Pet), daily_calories, protein_need, fat_need
+
+**FoodRecommendation**: diet_plan (ForeignKey → DietPlan), food (ForeignKey → Food), daily_amount
 
 ## 4. Ключевой функционал
 1. Добавление питомца с параметрами через форму
 2. Автоматический расчет суточной нормы калорий и БЖУ
 3. Поиск и рекомендации кормов через внешнее API
-4. Визуализация прогресса с графиками Matplotlib
-5. Личный кабинет с историей расчетов
+4. Личный кабинет с историей расчетов
 
 ## 5. Внешние интеграции и аналитика
 - **API**: интеграция с базой кормов для животных (requests)
-- **Аналитика**: генерация графиков веса и питания (Matplotlib/Pandas)
